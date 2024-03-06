@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('page-title', 'Book Create')
+@section('page-title', 'Comic Create')
 
 @section('main-content')
 <div class="container">
     <div class="row">
         <div class="col">
             <h1>
-                Book Create
+                Comic Create
             </h1>
 
-            <form action="{{ route('books.store') }}" method="post">
+            <form action="{{ route('comics.store') }}" method="post">
                 @csrf {{-- <--- A cosa serve? --}}
 
                 <div class="mb-3">
