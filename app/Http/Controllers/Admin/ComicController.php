@@ -33,7 +33,7 @@ class ComicController extends Controller
      */
     public function create()
     {
-        //
+        return view('comics.create');
     }
 
     /**
@@ -41,13 +41,25 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comicData = $request->all();
+
+        $comic = new Comic();
+        $comic->title = $singleComicData['title'];
+        $comic->description = $singleComicData['description'];
+        $comic->thumb = $singleComicData['thumb'];
+        $comic->price = $singleComicData['price'];
+        $comic->series = $singleComicData['series'];
+        $comic->sale_date = $singleComicData['sale_date'];
+        $comic->type = $singleComicData['type'];
+        $comic->save();
+
+        return redirect()->route('comics.show', ['comic' => $comic->id]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Comic $comic)
     {
         $comic = Comic::findOrFail ();
 
@@ -57,24 +69,39 @@ class ComicController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Comic $comics)
     {
-        //
+        return view('comics.edit', compact('comic'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Comic $comic)
     {
-        //
+        $newComic = $request->all();
+
+        $comic->title = $newComic['title'];
+        $comic->description = $newComic['description'];
+        $comic->thumb = $newComic['thumb'];
+        $comic->price = $newComic['price'];
+        $comic->series = $newComic['series'];
+        $comic->sale_date = $newComic['sale_date'];
+        $comic->type = $newComic['type'];
+        $comic->artists = str_replace(',', '|', $newComic['artists']);
+        $comic->writers = str_replace(',', '|', $newComic['writers']);
+
+        $comic->save();
+
+        return redirect()->route('comics.show', ['comic' => $comic->id]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Comic $comic)
     {
-        //
+        $comic->delete();
+        return redirect()->route('comics.index');
     }
 }

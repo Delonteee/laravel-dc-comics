@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('page-title', 'Comic Create')
+@section('page-title', $comic->title)
 
 @section('main-content')
 <div class="container">
     <div class="row">
         <div class="col">
             <h1>
-                Comic Create
+                Edit: {{ $comic->title }}
             </h1>
 
             <form action="{{ route('comics.update', ['comic' => $comic->id]) }}" method="POST" class="p-2">
@@ -62,7 +62,7 @@
 
                 <div>
                     <button type="submit" class="btn btn-success">
-                        Modifica
+                        Modify
                     </button>
                 </div>
 
