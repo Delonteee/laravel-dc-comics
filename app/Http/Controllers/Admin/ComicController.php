@@ -51,6 +51,23 @@ class ComicController extends Controller
         $comic->series = $singleComicData['series'];
         $comic->sale_date = $singleComicData['sale_date'];
         $comic->type = $singleComicData['type'];
+
+        $validatedData = $request->validate([
+            'title'             => 'required|max:256',
+            'description'       => 'nullable|max:1024',
+            'thumb'             => 'nullable|max:1024|url',
+            'price'             => 'nullable|numeric|min:1|max:1000',
+            'series'            => 'nullable|max:64',
+            'sale_date'         => 'nullable|date',
+            'type'              => 'required|max:32',
+            'artists'           => 'required|max:2000|json',
+            'writers'           => 'required|max:2000|json',
+        ], [
+            'title.required' => 'Title required',
+            'title.max' => 'Insert a maximum of 256 characters'
+        ]);
+        
+
         $comic->save();
 
         return redirect()->route('comics.show', ['comic' => $comic->id]);
@@ -90,6 +107,24 @@ class ComicController extends Controller
         $comic->type = $newComic['type'];
         $comic->artists = str_replace(',', '|', $newComic['artists']);
         $comic->writers = str_replace(',', '|', $newComic['writers']);
+
+
+
+        $validatedData = $request->validate([
+            'title'             => 'required|max:256',
+            'description'       => 'nullable|max:1024',
+            'thumb'             => 'nullable|max:1024|url',
+            'price'             => 'nullable|numeric|min:1|max:1000',
+            'series'            => 'nullable|max:64',
+            'sale_date'         => 'nullable|date',
+            'type'              => 'required|max:32',
+            'artists'           => 'required|max:2000|json',
+            'writers'           => 'required|max:2000|json',
+        ], [
+            'title.required' => 'Title required',
+            'title.max' => 'Insert a maximum of 256 characters'
+        ]);
+
 
         $comic->save();
 
